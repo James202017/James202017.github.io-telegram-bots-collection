@@ -1,0 +1,20 @@
+[
+  {
+    "city": "Пермь",
+    "name": "СтройПермь Девелопмент",
+    "status": "Надёжный",
+    "site": "https://example.dev/perm"
+  },
+  {
+    "city": "Пермь",
+    "name": "УралДом Инвест",
+    "status": "Надёжный",
+    "site": "https://example.dev/ural"
+  },
+  {
+    "city": "Россия",
+    "name": "Федеральный Девелопер АО",
+    "status": "Надёжный",
+    "site": "https://example.dev/fed"
+  }
+]

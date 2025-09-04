@@ -1,0 +1,42 @@
+[
+  {
+    "city": "Пермь",
+    "address": "ул. Ленина, 10",
+    "price": 6200000,
+    "rooms": 1,
+    "new_build": true,
+    "url": "https://example.dev/perm/lenina10"
+  },
+  {
+    "city": "Пермь",
+    "address": "ул. Пушкина, 35",
+    "price": 7800000,
+    "rooms": 2,
+    "new_build": false,
+    "url": "https://example.dev/perm/pushkina35"
+  },
+  {
+    "city": "Пермь",
+    "address": "ул. Комсомольский проспект, 50",
+    "price": 9900000,
+    "rooms": 3,
+    "new_build": true,
+    "url": "https://example.dev/perm/koms50"
+  },
+  {
+    "city": "Пермь",
+    "address": "ул. Гайдара, 7",
+    "price": 4800000,
+    "rooms": 0,
+    "new_build": false,
+    "url": "https://example.dev/perm/gaydara7"
+  },
+  {
+    "city": "Пермь",
+    "address": "ул. Екатерининская, 25",
+    "price": 8700000,
+    "rooms": 2,
+    "new_build": true,
+    "url": "https://example.dev/perm/ekat25"
+  }
+]

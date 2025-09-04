@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  realty_bot:
+    build: .
+    container_name: perm_realty_bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "${PORT:-8080}:8080"
+    volumes:
+      - ./:/app

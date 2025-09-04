@@ -1,0 +1,94 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "DOCKERFILE",
+    "dockerfilePath": "Dockerfile"
+  },
+  "deploy": {
+    "numReplicas": 1,
+    "sleepApplication": false,
+    "restartPolicyType": "ON_FAILURE"
+  },
+  "environments": {
+    "production": {
+      "variables": {
+        "PYTHONUNBUFFERED": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      }
+    }
+  },
+  "services": {
+    "investment-bot": {
+      "source": {
+        "repo": ".",
+        "rootDirectory": "bots"
+      },
+      "build": {
+        "buildCommand": "pip install -r ../requirements.txt"
+      },
+      "deploy": {
+        "startCommand": "python BOT_Inv.py"
+      }
+    },
+    "appraisal-bot": {
+      "source": {
+        "repo": ".",
+        "rootDirectory": "bots"
+      },
+      "build": {
+        "buildCommand": "pip install -r ../requirements.txt"
+      },
+      "deploy": {
+        "startCommand": "python BOT_Ocenka.py"
+      }
+    },
+    "purchase-bot": {
+      "source": {
+        "repo": ".",
+        "rootDirectory": "bots"
+      },
+      "build": {
+        "buildCommand": "pip install -r ../requirements.txt"
+      },
+      "deploy": {
+        "startCommand": "python BOT_P.py"
+      }
+    },
+    "sales-bot": {
+      "source": {
+        "repo": ".",
+        "rootDirectory": "bots"
+      },
+      "build": {
+        "buildCommand": "pip install -r ../requirements.txt"
+      },
+      "deploy": {
+        "startCommand": "python BOT_PR.py"
+      }
+    },
+    "insurance-bot": {
+      "source": {
+        "repo": ".",
+        "rootDirectory": "bots"
+      },
+      "build": {
+        "buildCommand": "pip install -r ../requirements.txt"
+      },
+      "deploy": {
+        "startCommand": "python BOT_Str.py"
+      }
+    },
+    "realty-bot-v2": {
+      "source": {
+        "repo": ".",
+        "rootDirectory": "perm_realty_bot_v2"
+      },
+      "build": {
+        "buildCommand": "pip install -r requirements.txt"
+      },
+      "deploy": {
+        "startCommand": "python -m app.main"
+      }
+    }
+  }
+}

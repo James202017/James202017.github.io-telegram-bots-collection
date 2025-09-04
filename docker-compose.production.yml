@@ -1,0 +1,144 @@
+version: '3.8'
+
+services:
+  # Бот покупки недвижимости
+  bot-purchase:
+    image: ${DOCKER_USERNAME}/dmitry-BOT_P:latest
+    container_name: dmitry-bot-purchase
+    restart: unless-stopped
+    environment:
+      - BOT_TOKEN=${BOT_P_TOKEN}
+      - BOT_NAME=Покупка недвижимости
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - bots-network
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import requests; requests.get('https://api.telegram.org/bot${BOT_P_TOKEN}/getMe')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Бот продажи недвижимости  
+  bot-sale:
+    image: ${DOCKER_USERNAME}/dmitry-BOT_PR:latest
+    container_name: dmitry-bot-sale
+    restart: unless-stopped
+    environment:
+      - BOT_TOKEN=${BOT_PR_TOKEN}
+      - BOT_NAME=Продажа недвижимости
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - bots-network
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import requests; requests.get('https://api.telegram.org/bot${BOT_PR_TOKEN}/getMe')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Бот инвестиций
+  bot-investment:
+    image: ${DOCKER_USERNAME}/dmitry-BOT_Inv:latest
+    container_name: dmitry-bot-investment
+    restart: unless-stopped
+    environment:
+      - BOT_TOKEN=${BOT_INV_TOKEN}
+      - BOT_NAME=Инвестиции в недвижимость
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - bots-network
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import requests; requests.get('https://api.telegram.org/bot${BOT_INV_TOKEN}/getMe')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Бот страхования
+  bot-insurance:
+    image: ${DOCKER_USERNAME}/dmitry-BOT_Str:latest
+    container_name: dmitry-bot-insurance
+    restart: unless-stopped
+    environment:
+      - BOT_TOKEN=${BOT_STR_TOKEN}
+      - BOT_NAME=Страхование недвижимости
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - bots-network
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import requests; requests.get('https://api.telegram.org/bot${BOT_STR_TOKEN}/getMe')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Бот оценки недвижимости
+  bot-evaluation:
+    image: ${DOCKER_USERNAME}/dmitry-BOT_Ocenka:latest
+    container_name: dmitry-bot-evaluation
+    restart: unless-stopped
+    environment:
+      - BOT_TOKEN=${BOT_OCENKA_TOKEN}
+      - BOT_NAME=Оценка недвижимости
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - bots-network
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import requests; requests.get('https://api.telegram.org/bot${BOT_OCENKA_TOKEN}/getMe')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Мониторинг (опционально)
+  monitoring:
+    image: prom/prometheus:latest
+    container_name: dmitry-monitoring
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - bots-network
+    profiles:
+      - monitoring
+
+  # Grafana для визуализации (опционально)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: dmitry-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - bots-network
+    profiles:
+      - monitoring
+
+networks:
+  bots-network:
+    driver: bridge
+    name: dmitry-bots-network
+
+volumes:
+  prometheus_data:
+    name: dmitry-prometheus-data
+  grafana_data:
+    name: dmitry-grafana-data
